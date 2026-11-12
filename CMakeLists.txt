@@ -145,10 +145,9 @@ if(TARGET controller_interface::controller_interface)
       hardware_interface::hardware_interface
   )
 else()
-  ament_target_dependencies(${PROJECT_NAME}
-    PUBLIC
-      controller_interface
-      hardware_interface
+  target_link_libraries(${PROJECT_NAME} PUBLIC
+    ${controller_interface_TARGETS}
+    ${hardware_interface_TARGETS}
   )
 endif()
 
