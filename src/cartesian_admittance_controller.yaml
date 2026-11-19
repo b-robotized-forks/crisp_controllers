@@ -24,6 +24,12 @@ cartesian_admittance_controller:
     validation:
       bounds<>: [0.001, 1.0]
 
+  armature:
+    type: double_array
+    default_value: []
+    description: "Armature (reflected rotor inertia) per joint in kg m^2, in the order of joints. Added to the diagonal of the model's joint-space inertia, which a URDF cannot express. Empty leaves the model without armature."
+    read_only: true
+
   task:
     k_pos_x:
       type: double

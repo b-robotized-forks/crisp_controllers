@@ -24,6 +24,7 @@
 
 #include <crisp_controllers/cartesian_admittance_controller.hpp>
 #include <crisp_controllers/pch.hpp>
+#include <crisp_controllers/utils/armature.hpp>
 #include <crisp_controllers/utils/friction_model.hpp>
 #include <crisp_controllers/utils/joint_limits.hpp>
 #include <crisp_controllers/utils/pseudo_inverse.hpp>
@@ -377,6 +378,12 @@ CartesianAdmittanceController::on_configure(const rclcpp_lifecycle::State & /*pr
 
   Eigen::VectorXd q_locked = Eigen::VectorXd::Zero(raw_model_.nq);
   model_ = pinocchio::buildReducedModel(raw_model_, list_of_joints_to_lock_by_id, q_locked);
+
+  std::string armature_error;
+  if (!set_joint_armature(model_, params_.joints, params_.armature, armature_error)) {
+    RCLCPP_ERROR_STREAM(get_node()->get_logger(), "Failed to configure: " << armature_error);
+    return CallbackReturn::ERROR;
+  }
   data_ = pinocchio::Data(model_);
 
   for (int joint_id = 0; joint_id < model_.njoints; joint_id++) {
