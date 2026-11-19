@@ -354,4 +354,4 @@ cartesian_controller:
   enable_introspection:
     type: bool
     default_value: false
-    description: "Whether or not to publish the internal state of this controller for debugging, e.g. in plotjuggler. The values are published on '<controller name>/introspection_data/full'. They use an own registry, not the ros2_control introspection registry."
+    description: "Whether or not to publish the internal state of this controller for debugging, e.g. in plotjuggler. The values are published on '<controller name>/introspection_data/full'."
